@@ -6,6 +6,7 @@ def init():
         pika.ConnectionParameters(host='localhost'))
     channel = connection.channel()
 
+
     channel.exchange_declare(exchange='GestionInterna', exchange_type='direct')
 
     result = channel.queue_declare(queue='GestionInterna', exclusive=True)

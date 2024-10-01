@@ -4,7 +4,7 @@ from os import times
 from pika.exceptions import UnroutableError, ConsumerCancelled
 import json as js
 
-from Model.Log import save_log
+#from Model.Log import save_log
 
 
 def inicializar_tracing(channel):
@@ -30,4 +30,5 @@ def callback(channel,method, properties, body):
     payload = json_msg.get('payload')
     origin = json_msg.get('origin')
     destination = json_msg.get('destination')
-    save_log(status, timestamp, ttl, payload, origin, destination)
+    #save_log(status, timestamp, ttl, payload, origin, destination)
+    #TODO REVISAR FUNCIONAMIENTO CON CASSANDRA

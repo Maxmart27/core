@@ -56,7 +56,7 @@ def callback(channel,method, properties, body):
 def publish_usuario(channel,message):
 #Decirle a RabbitMQ que queremos recibir mensajes de 'Usuario'
     try:
-        channel.basic_publish(exchange='usuario', routing_key='usuario', body=message,mandatory=True)
+        channel.basic_publish(exchange='usuario', routing_key='usuario', body=message,mandatory=True, delivery_mode =2)
         print(f" [x] Sent {message}")
     except UnroutableError:
         print("El mensaje no pudo ser confirmado o enrutado desde Usuario")

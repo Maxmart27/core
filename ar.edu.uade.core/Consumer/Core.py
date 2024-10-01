@@ -1,6 +1,6 @@
 import pika
 
-def inicializar_core(connection):
+def inicializar_core():
 
     connection = pika.BlockingConnection(
         pika.ConnectionParameters(host='localhost'))
@@ -14,12 +14,18 @@ def inicializar_core(connection):
     channel.queue_bind(
         exchange='Core', queue=queue_name, routing_key=queue_name)
 
+def consume_core(connection):
+    channel = connection.channel
+
     # Definir la función que se ejecutará cuando se reciba un mensaje
     def callback(ch, method, properties, body):
         print(f" [x] Recibido: {body.decode()}")
 
+        #TODO ASEGURAR QUE CORE EL REENVIE LOS MENSAJES A LAS COLAS ESPECIFICAS
+        #Hacer en el callback, lectura del body y reenviar a la cola segun header destino...
+
     # Decirle a RabbitMQ que queremos recibir mensajes de 'Core'
     channel.basic_consume(queue=queue_name, on_message_callback=callback, auto_ack=True)
 
-    print(' [*] Esperando mensajes. Para salir presiona CTRL+C')
+
     channel.start_consuming()

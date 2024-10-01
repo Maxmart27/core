@@ -3,10 +3,7 @@ import threading
 from flask_socketio import SocketIO, emit
 from flask import Flask, render_template
 from Connection.Connection import start_rabbitmq_connection, end_connection
-"""
-from Consumer.Tracing import consume_tracing, inicializar_tracing
-from Database.Cassandra import start_cassandra_connection
-"""
+from Consumer.Core import inicializar_core
 from Senders.Usuario import inicializar_usuario, publish_usuario, consume_usuario
 
 app = Flask(__name__)
@@ -31,6 +28,7 @@ inicializacion de colas, exchanges y
 """
 
 inicializar_usuario(channel)
+inicializar_core()
 #inicializar_tracing(channel)
 """
 prueba de publicacion de json
@@ -58,11 +56,13 @@ if __name__ == '__main__':
     #t3 = threading.Thread(target=consume_gestion_financiera(channel), name='t3')
     #t4 = threading.Thread(target=consume_gestion_interna(channel), name='t4')
     #t5 = threading.Thread(target=consume_tracing(channel), name='t5')
-    t6 = threading.Thread(target=socketio.run(app, debug=True), name='t6')
+    #t6 = threading.Thread(target=consume_core(channel), name='t6')
+    t7 = threading.Thread(target=socketio.run(app, debug=True), name='t7')
 
     t1.start()
     #t2.start()
     #t3.start()
     #t4.start()
     #t5.start()
-    t6.start()
+    #t6.start()
+    t7.start()
